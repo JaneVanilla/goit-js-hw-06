@@ -25,30 +25,24 @@ createBtn.addEventListener("click", () => {
 
 destroyBtn.addEventListener("click", removeBoxes);
 
+const allItems = [];
+
 function createBoxes(amount) {
   box.textContent = "";
-
+  allItems.length = 0;
+  let itemSize = 30;
   for (let i = 0; i < amount; i++) {
-    box.insertAdjacentHTML("beforeend", `<div class="box-item"></div>`);
+    allItems.push(
+      `<div class="box-item" style="width:${itemSize}px; height:${itemSize}px; background-color:${getRandomHexColor()}"></div>`
+    );
+    itemSize += 10;
   }
 
-  let boxItems = box.querySelectorAll(".box-item");
-
-  boxItems.forEach((item) => {
-    item.style.backgroundColor = getRandomHexColor();
-  });
-
-  const arr = [...boxItems];
-  let size = 0;
-  for (let i = 1; i < arr.length; i++) {
-    size += 10;
-    let widthActual = arr[i].offsetWidth + size;
-    arr[i].style.width = `${widthActual}px`;
-    arr[i].style.height = `${widthActual}px`;
-  }
+  box.insertAdjacentHTML("beforeend", allItems.join(""));
 }
 
 function removeBoxes() {
   box.textContent = "";
   numberInput.value = "";
+  allItems.length = 0;
 }
